@@ -6,6 +6,8 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {UserEntity} from "./user/entities/user.entity";
 import {PostModule} from "./post/post.module";
 import {PostEntity} from "./post/entities/post.entity";
+import {CommentModule} from "./comment/comment.module";
+import {CommentEntity} from "./comment/entities/comment.entity";
 
 @Module({
     imports: [
@@ -16,11 +18,12 @@ import {PostEntity} from "./post/entities/post.entity";
             username: "postgres",
             password: "123456",
             database: "tjournal",
-            entities: [UserEntity, PostEntity],
-            synchronize: true, //TODO в продакшане должно стоять false, иначе все данные сотрутся 
+            entities: [UserEntity, PostEntity, CommentEntity],
+            synchronize: true, //TODO в продакшане должно стоять false, иначе все данные сотрутся
         }),
         UserModule,
         PostModule,
+        CommentModule,
     ],
     controllers: [AppController],
     providers: [AppService],
