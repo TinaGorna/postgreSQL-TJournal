@@ -1,4 +1,4 @@
-import {Injectable} from "@nestjs/common";
+import {Injectable, NotFoundException} from "@nestjs/common";
 import {CreatePostDto} from "./dto/create-post.dto";
 import {UpdatePostDto} from "./dto/update-post.dto";
 import {InjectRepository} from "@nestjs/typeorm";
@@ -21,11 +21,21 @@ export class PostService {
         return this.repository.find();
     }
 
-    findOne(id: number) { //TODO проверить правильность работы
-        return this.repository.findOne({where: {id}});
+    async findOne(id: number) { //TODO проверить правильность работы {where: {id}}
+        const find = await this.repository.findOne({where: {id}});
+
+        if (!find) {
+            throw new NotFoundException("Post is not found")
+        }
+        return find;
     }
 
-    update(id: number, dto: UpdatePostDto) {
+    async update(id: number, dto: UpdatePostDto) { //TODO проверить правильность работы {where: {id}}
+        const find = await this.repository.findOne({where: {id}});
+
+        if (!find) {
+            throw new NotFoundException("Post is not found")
+        }
         return this.repository.update(id, dto);
     }
 
