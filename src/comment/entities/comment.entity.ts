@@ -5,7 +5,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
-import {JoinColumn} from "typeorm/browser";
+import {JoinColumn} from "typeorm";
 import {UserEntity} from "../../user/entities/user.entity";
 import {PostEntity} from "../../post/entities/post.entity";
 
