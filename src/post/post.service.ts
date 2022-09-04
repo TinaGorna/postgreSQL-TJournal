@@ -27,7 +27,7 @@ export class PostService {
         if (!find) {
             throw new NotFoundException("Post is not found")
         }
-        return find;
+        return find; //здесь не делаем второй запрос, а получаем то, что есть
     }
 
     async update(id: number, dto: UpdatePostDto) { //TODO проверить правильность работы {where: {id}}
@@ -36,10 +36,14 @@ export class PostService {
         if (!find) {
             throw new NotFoundException("Post is not found")
         }
-        return this.repository.update(id, dto);
+        return this.repository.update(id, dto); //верхний и нижний код - два разных запроса
     }
 
-    remove(id: number) {
+    async remove(id: number) {
+        const find = await this.repository.find({where: {id}})
+        if (!find) {
+            throw new NotFoundException("Post is not found")
+        }
         return this.repository.delete(id);
     }
 }

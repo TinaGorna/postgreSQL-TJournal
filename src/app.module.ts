@@ -17,7 +17,7 @@ import {PostEntity} from "./post/entities/post.entity";
             password: "123456",
             database: "tjournal",
             entities: [UserEntity, PostEntity],
-            synchronize: true,
+            synchronize: true, //TODO в продакшане должно стоять false, иначе все данные сотрутся 
         }),
         UserModule,
         PostModule,

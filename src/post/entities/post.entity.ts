@@ -1,4 +1,10 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
 
 @Entity("posts")
 export class PostEntity {
@@ -13,4 +19,11 @@ export class PostEntity {
 
     @Column({nullable: true})
     tags?: string;
+
+    @CreateDateColumn({type: "timestamp"})
+    createdAt: Date;
+
+    @UpdateDateColumn({type: "timestamp"})
+    updatedAt: Date;
+
 }
