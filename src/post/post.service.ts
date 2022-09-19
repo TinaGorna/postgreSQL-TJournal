@@ -21,6 +21,14 @@ export class PostService {
         return this.repository.find();
     }
 
+    popular() {
+        return this.repository.find({ //query Builder
+            order: {
+                views: "DESC"
+            }
+        });
+    }
+
     async findOne(id: number) { //TODO проверить правильность работы {where: {id}}
         const find = await this.repository.findOne({where: {id}});
 
