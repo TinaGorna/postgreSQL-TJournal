@@ -37,16 +37,23 @@ export class PostService {
         }
 
         if (dto.body) {
-            qb.where(`p.body ILIKE %${dto.body}%`);
+            qb.andWhere(`p.body ILIKE :body`);
         }
 
         if (dto.title) {
-            qb.where(`p.title ILIKE %${dto.title}%`);
+            qb.andWhere(`p.title ILIKE :title`);
         }
 
         if (dto.tag) {
-            qb.where(`p.title ILIKE %${dto.tag}%`);
+            qb.andWhere(`p.title ILIKE :tag`);
         }
+
+        qb.setParameters({
+            title: `%${dto.title}%`,
+            body: `%${dto.body}%`,
+            tag: `%${dto.tag}%`,
+            views: dto.views || "DESC",
+        })
 
         const [items, total] = await qb.getManyAndCount();
         return {items, total};
@@ -61,7 +68,7 @@ export class PostService {
     }
 
     async findOne(id: number) { //TODO проверить правильность работы {where: {id}}
-        const find = await this.repository.findOne({where: {id}});
+        const find = await this.repository.findOne(+id);
 
         if (!find) {
             throw new NotFoundException("Post is not found")
