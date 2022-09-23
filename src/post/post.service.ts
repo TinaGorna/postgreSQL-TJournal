@@ -67,17 +67,21 @@ export class PostService {
         });
     }
 
-    async findOne(id: number) { //TODO проверить правильность работы {where: {id}}
-        const find = await this.repository.findOne(+id);
+    async findOne(id: number) {
+        await this.repository
+            .createQueryBuilder("posts")
+            .whereInIds(id)
+            .update()
+            .set({
+                views: () => "views + 1",
+            })
+            .execute()
 
-        if (!find) {
-            throw new NotFoundException("Post is not found")
-        }
-        return find; //здесь не делаем второй запрос, а получаем то, что есть
+        return this.repository.findOne(id);
     }
 
-    async update(id: number, dto: UpdatePostDto) { //TODO проверить правильность работы {where: {id}}
-        const find = await this.repository.findOne({where: {id}});
+    async update(id: number, dto: UpdatePostDto) {
+        const find = await this.repository.findOne(+id)
 
         if (!find) {
             throw new NotFoundException("Post is not found")
@@ -86,7 +90,7 @@ export class PostService {
     }
 
     async remove(id: number) {
-        const find = await this.repository.find({where: {id}})
+        const find = await this.repository.find(+id)
         if (!find) {
             throw new NotFoundException("Post is not found")
         }

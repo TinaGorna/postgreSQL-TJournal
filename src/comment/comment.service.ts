@@ -26,7 +26,7 @@ export class CommentService {
     }
 
     findOne(id: number) {
-        return this.repository.findOne({where: {id}});
+        return this.repository.findOne(id);
     }
 
     update(id: number, dto: UpdateCommentDto) {
