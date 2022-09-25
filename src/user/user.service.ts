@@ -3,7 +3,7 @@ import {CreateUserDto} from "./dto/create-user.dto";
 import {UpdateUserDto} from "./dto/update-user.dto";
 import {InjectRepository} from "@nestjs/typeorm";
 import {UserEntity} from "./entities/user.entity";
-import {FindOneOptions, Repository} from "typeorm";
+import {Repository} from "typeorm";
 import {LoginUserDto} from "./dto/login-user.dto";
 
 @Injectable()
@@ -27,7 +27,7 @@ export class UserService {
     }
 
     findByCond(cond: LoginUserDto) {
-        return this.repository.findOne(cond);
+        return this.repository.findOneBy(cond);
     }
 
     update(id: number, updateUserDto: UpdateUserDto) {
