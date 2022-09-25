@@ -77,11 +77,11 @@ export class PostService {
             })
             .execute()
 
-        return this.repository.findOne(id);
+        return this.repository.findOne({where: {id}});
     }
 
     async update(id: number, dto: UpdatePostDto) {
-        const find = await this.repository.findOne(+id)
+        const find = await this.repository.findOne({where: {id}})
 
         if (!find) {
             throw new NotFoundException("Post is not found")
@@ -90,7 +90,7 @@ export class PostService {
     }
 
     async remove(id: number) {
-        const find = await this.repository.find(+id)
+        const find = await this.repository.find({where: {id}})
         if (!find) {
             throw new NotFoundException("Post is not found")
         }
